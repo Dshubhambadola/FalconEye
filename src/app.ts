@@ -1,5 +1,7 @@
 import express from 'express';
 import eventRoutes from './modules/event/interfaces/event.controller';
+import ruleRoutes from './modules/rule/interfaces/rule.controller';
+import alertRoutes from './modules/alert/interfaces/alert.controller';
 
 const app = express();
 
@@ -10,5 +12,7 @@ app.get('/health', (_req, res) => {
 });
 
 app.use('/api/events', eventRoutes);
+app.use('/api/rules', ruleRoutes);
+app.use('/api/alerts', alertRoutes);
 
 export default app;
