@@ -4,6 +4,8 @@ import ruleRoutes from './modules/rule/interfaces/rule.controller';
 import alertRoutes from './modules/alert/interfaces/alert.controller';
 import { authMiddleware } from './modules/client/middleware/auth.middleware';
 import clientRoutes from './modules/client/interfaces/client.controller';
+import { rateLimitMiddleware } from './modules/client/middleware/rate-limit.middleware';
+
 
 const app = express();
 
@@ -14,6 +16,8 @@ app.get('/health', (_req, res) => {
 });
 
 app.use('/api/clients', clientRoutes); // public route to register clients
+app.use('/api/events', rateLimitMiddleware, eventRoutes);
+
 app.use((req, res, next) => {
   authMiddleware(req, res, next).catch(next);
 });
