@@ -1,7 +1,15 @@
 import { Router, Request, Response } from 'express';
 import { RuleModel } from '../infrastructure/rule.model';
+import { requireAdminRole } from '../../client/middleware/role.middleware';
 
 const router = Router();
+router.use('/', (req, res, next) => {
+  try {
+    requireAdminRole(req, res, next);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.post('/', async (req: Request, res: Response) => {
   try {
